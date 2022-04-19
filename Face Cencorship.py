@@ -6,16 +6,20 @@ cap.set(4,480)
 
 face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-
 while True:
     success, img = cap.read()
     img = cv.flip(img,1)
     gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
     detected_faces = face_cascade.detectMultiScale(gray)
-
+    
     for (column, row, width, height) in detected_faces:
-        vidy = cv.rectangle(img,(column,row), (column+height, row+width),(0,0,255), 5)# Drawing a red box around the face to show detected face
         
-    cv.imshow("video.mp4",img)
+        vidy = img[row:height+row,column:height+column] #takes detected face's coordinates to display it in a different window
+        blur = cv.GaussianBlur(vidy, (51, 51), 0)  # blurring the face
+        img[row:height + row, column:height+ column] = vidy
+
+
+        cv.imshow("vidy.mp4", vidy) #Displaying cropped face
+    cv.imshow("video.mp4",img) #full video
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
