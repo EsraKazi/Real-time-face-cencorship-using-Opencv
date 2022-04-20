@@ -5,12 +5,12 @@ cap = cv.VideoCapture(0)
 cap.set(3,640)
 cap.set(4,480)
 
+face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 while True:
     success, img = cap.read()
     img = cv.flip(img,1)
     gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-    face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
     detected_faces = face_cascade.detectMultiScale(gray,minSize=[150,150])#150,150 pixel altındaki algılanan yüzler görmezden gelinecek.Burun, yüz olarak algılandığı için eklendi
 
     for (column, row, width, height) in detected_faces:
