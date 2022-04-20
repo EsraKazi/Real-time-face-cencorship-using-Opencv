@@ -15,7 +15,7 @@ while True:
     for (column, row, width, height) in detected_faces:
 
         vidy = img[row:height+row,column:height+column]
-        org = vidy.copy() # Algılanan yüzü göstermek için efekt eklemeden önce kopyalanıyor
+        original = vidy.copy() # Algılanan yüzü göstermek için efekt eklemeden önce kopyalanıyor
         blur = cv.GaussianBlur(vidy, (51, 51), 0)  #blur atma
 
         height, width = blur.shape[:2]
@@ -25,7 +25,7 @@ while True:
         img[row:height + row, column:height+ column] = output
 
 
-        cv.imshow("vidy.mp4", org)# Algılanan yüzün ayrı pencerede görüntülenmesi
+        cv.imshow("vidy.mp4", original)# Algılanan yüzün ayrı pencerede görüntülenmesi
     cv.imshow("video.mp4",img) #Sansür uygulanmış görüntünün tamamının görüntülenmesi
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
